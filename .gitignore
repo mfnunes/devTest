@@ -23,6 +23,10 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+nbactions.tmp
 
 ### Report folder ###
 data/out
+
+### log files ###
+*.log

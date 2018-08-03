@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileService {
 
-
     @Value("${files.directory.in.absolutepath}")
     private String dataIn;
 
@@ -64,9 +63,12 @@ public class FileService {
                 WatchKey key;
                 while ((key = watchService.take()) != null) {
                     for (WatchEvent<?> event : key.pollEvents()) {
+                        String fileName = event.context().toString();
                         log.debug("New file was detected. File name: " + event.context());
-                        //load the .dat files and gerenate a result done.dat
-                        loadFiles();
+                        if (fileName.endsWith(".dat")) {
+                            //load the .dat files and gerenate a result done.dat
+                            loadFiles();
+                        }
                     }
                     key.reset();
                 }
@@ -97,11 +99,11 @@ public class FileService {
         // Creating/updating the report file
         log.info("Writing the the report file...");
         try {
-        //creating the folder if it doesn't exist.
-        new File(pathToSaveReport).mkdirs();
+            //creating the folder if it doesn't exist.
+            new File(pathToSaveReport).mkdirs();
 
-        String outputFileName = pathToSaveReport + "/" + reportFileName;
-        File outputFile = new File(outputFileName);
+            String outputFileName = pathToSaveReport + "/" + reportFileName;
+            File outputFile = new File(outputFileName);
             try (PrintWriter output = new PrintWriter(outputFile)) {
                 output.println("Quantidade de clientes: " + report.getNumberOfClients());
                 output.println("Quantidade de vendedores: " + report.getNumberOfSellers());

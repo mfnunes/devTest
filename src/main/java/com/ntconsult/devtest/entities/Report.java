@@ -29,11 +29,11 @@ public class Report {
      * It is assumed that don't exists two sellers with the same name because the sale is related to the name of the
      * seller.
      */
-    private final Map<String, Float> sellesWithTotalSale;
+    private final Map<String, Float> sellerWithTotalSale;
 
     public Report() {
         clients = new HashSet<>();
-        sellesWithTotalSale = new HashMap<>();
+        sellerWithTotalSale = new HashMap<>();
         //initialize here to avoid null test in all lines
         mostExpensiveSale = new Sale();
     }
@@ -64,8 +64,8 @@ public class Report {
                             case 1:
                                 //seller
                                 String sellerName = lineArray[2];
-                                if (!sellesWithTotalSale.containsKey(sellerName)) {
-                                    sellesWithTotalSale.put(sellerName, 0f);
+                                if (!sellerWithTotalSale.containsKey(sellerName)) {
+                                    sellerWithTotalSale.put(sellerName, 0f);
                                 }
                                 break;
                             case 2:
@@ -103,12 +103,12 @@ public class Report {
      * @param s
      */
     private void addSellersTotalSale(Sale s) {
-        if (sellesWithTotalSale.containsKey(s.getSeller())) {
-            Float sellerAmount = sellesWithTotalSale.get(s.getSeller());
+        if (sellerWithTotalSale.containsKey(s.getSeller())) {
+            Float sellerAmount = sellerWithTotalSale.get(s.getSeller());
             sellerAmount += s.getAmount();
-            sellesWithTotalSale.put(s.getSeller(), sellerAmount);
+            sellerWithTotalSale.put(s.getSeller(), sellerAmount);
         } else {
-            sellesWithTotalSale.put(s.getSeller(), s.getAmount());
+            sellerWithTotalSale.put(s.getSeller(), s.getAmount());
         }
     }
 
@@ -138,7 +138,7 @@ public class Report {
      * @return number of sellers in the files.
      */
     public int getNumberOfSellers() {
-        return sellesWithTotalSale.size();
+        return sellerWithTotalSale.size();
     }
 
     /**
@@ -158,7 +158,10 @@ public class Report {
      * @return Worst seller name
      */
     public String getWorstSellerName() {
-        Entry<String, Float> min = Collections.min(sellesWithTotalSale.entrySet(),
+        if(sellerWithTotalSale.isEmpty()){
+            return "";
+        }
+        Entry<String, Float> min = Collections.min(sellerWithTotalSale.entrySet(),
                 Comparator.comparing(Entry::getValue));
         return min.getKey();
     }

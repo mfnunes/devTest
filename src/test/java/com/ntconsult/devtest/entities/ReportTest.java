@@ -55,4 +55,18 @@ public class ReportTest {
         assertThat(r.getWorstSellerName(), equalTo("Renato"));
         assertThat(r.getMostExpensiveSale().getId(), equalTo(8L));
     }
+
+    @Test
+    public void testGenerateRerportFileWithOneClientOnly() throws IOException {
+        Resource data = resourceLoader.getResource("classpath:onlyclient.dat");
+
+        File f = data.getFile();
+        Report r = new Report();
+        r.addFile(f);
+
+        assertThat(r.getNumberOfSellers(), equalTo(0));
+        assertThat(r.getNumberOfClients(), equalTo(1));
+        assertThat(r.getWorstSellerName(), equalTo(""));
+        assertThat(r.getMostExpensiveSale().getId(), equalTo(0L));
+    }
 }

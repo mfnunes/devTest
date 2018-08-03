@@ -47,7 +47,7 @@ public class Report {
     public void addFile(File file) {
         log.debug("Reading file: {}", file.getName());
         try {
-            try (Scanner scanner = new Scanner(file)) {
+            try (Scanner scanner = new Scanner(file, "utf-8")) {
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
                     //split line to identify the entity type

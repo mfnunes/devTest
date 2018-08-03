@@ -15,8 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Report entity.
  *
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 public class Report {
 
@@ -74,14 +75,7 @@ public class Report {
                                 break;
                             case 3:
                                 //sales data
-                                try {
-                                    Sale s = Sale.fromArray(lineArray);
-                                    addSellersTotalSale(s);
-                                    updateMostExpensiveSale(s);
-                                } catch (BadFormatException formatEx) {
-                                    log.error("This line will be ignored because is out of pattern. Line: {}",
-                                            line, formatEx);
-                                }
+                                addSalesData(lineArray);
                                 break;
                             default:
                                 log.error("An unknown id was received. The possible values are 001, 002 or 003. Line: {}", line);
@@ -94,6 +88,21 @@ public class Report {
             }
         } catch (FileNotFoundException e) {
             log.error("File not found.", e);
+        }
+    }
+
+    /**
+     * Process the sales data.
+     *
+     * @param line line of the file that is a sales data.
+     */
+    private void addSalesData(String[] line) {
+        try {
+            Sale s = Sale.fromArray(line);
+            addSellersTotalSale(s);
+            updateMostExpensiveSale(s);
+        } catch (BadFormatException formatEx) {
+            log.error("This line will be ignored because is out of pattern. Line: {}", line, formatEx);
         }
     }
 
@@ -158,7 +167,7 @@ public class Report {
      * @return Worst seller name
      */
     public String getWorstSellerName() {
-        if(sellerWithTotalSale.isEmpty()){
+        if (sellerWithTotalSale.isEmpty()) {
             return "";
         }
         Entry<String, Float> min = Collections.min(sellerWithTotalSale.entrySet(),

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 public class SaleTest {
 

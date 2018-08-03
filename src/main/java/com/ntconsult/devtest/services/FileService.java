@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 @Service
 public class FileService {
@@ -45,13 +45,16 @@ public class FileService {
     private final Logger log = LoggerFactory.getLogger(FileService.class);
 
     /**
-     * Watch a folder and generate event to read files when a new file was created.
+     * Watch the folder informed in application.properties attribute {@code files.directory.in.absolutepath} and
+     * generate event to read files when a new file was created.
      */
     public void watchFolder() {
         //creating the folder if it doesn't exist.
         new File(dataIn).mkdirs();
 
+        //Process de initial files
         loadFiles();
+
         try {
             try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
                 Path path = Paths.get(dataIn);
@@ -64,7 +67,7 @@ public class FileService {
                 while ((key = watchService.take()) != null) {
                     for (WatchEvent<?> event : key.pollEvents()) {
                         String fileName = event.context().toString();
-                        log.debug("New file was detected. File name: " + event.context());
+                        log.debug("New file was detected. File name: {}", fileName);
                         if (fileName.endsWith(".dat")) {
                             //load the .dat files and gerenate a result done.dat
                             loadFiles();
@@ -95,6 +98,11 @@ public class FileService {
         writeReportFile(report);
     }
 
+    /**
+     * Write a report file in the folder specified at aplication.properties.
+     *
+     * @param report
+     */
     private void writeReportFile(Report report) {
         // Creating/updating the report file
         log.info("Writing the the report file...");

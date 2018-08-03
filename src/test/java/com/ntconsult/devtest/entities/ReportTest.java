@@ -18,8 +18,9 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- *
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * Testing the report entity.
+ * 
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

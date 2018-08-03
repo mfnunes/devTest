@@ -1,24 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ntconsult.devtest.entities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
+ * Sale entity.
  *
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 public class Sale {
 
     private long id;
     private float amount;
     private String seller;
-    private static final Logger LOG = LoggerFactory.getLogger(Sale.class);
 
+    /**
+     * Default constructor.
+     */
     public Sale() {
         amount = 0F;
     }

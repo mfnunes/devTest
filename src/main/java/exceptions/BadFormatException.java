@@ -2,7 +2,7 @@ package exceptions;
 
 /**
  * The exception that is thrown when the format of input file is invalid.
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+ * @author Marcos Freitas Nunes <marcosn@gmail.com>
  */
 public class BadFormatException extends RuntimeException {
 
